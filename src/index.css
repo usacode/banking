@@ -1,0 +1,37 @@
+/* Custom card styles */
+.card.bg-custom {
+  background-color: rgb(118, 118, 188);
+  color: white;
+}
+
+
+/* Custom table styles */
+.custom-table {
+  border: 1px solid #dee2e6;
+}
+
+.custom-table th,
+.custom-table td {
+  border: 1px solid #dee2e6;
+  padding: 8px;
+}
+
+.custom-table th {
+  background-color:  rgb(118, 118, 188); /* Header background color */
+  color: #fff; /* Header text color */
+}
+
+.custom-table tbody tr:nth-of-type(odd) {
+  background-color: #f8f9fa; /* Alternate row background color */
+}
+
+/* Custom styles for smaller devices */
+@media (max-width: 768px) {
+  .custom-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+
