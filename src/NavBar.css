@@ -1,7 +1,0 @@
-.nav.link.custom {
-  transition: color 0.3s; /* Smooth transition for color change */
-}
-
-.nav.link.custom:hover {
-  color: #007bff; /* Change color on hover */
-}
