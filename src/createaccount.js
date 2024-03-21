@@ -13,6 +13,11 @@ function CreateAccount() {
   const [show, setShow] = useState(true);
   const [alertMessage, setAlertMessage] = useState('');
 
+  //validate email format
+  const isValidEmail = (email) => {
+    return /\S+@\S+\.\S+/.test(email);
+  };
+
   const handleCreate = (e) => {
     e.preventDefault();
 
@@ -21,6 +26,12 @@ function CreateAccount() {
       setStatus('Please fill in all fields');
       return;
     }
+    //check if eamil format is valid
+    if (!isValidEmail(email)) {
+      setAlertMessage('Please enter a valid email');
+      return;
+    }
+
     // Check if email already exists
     const existingAccount = accounts.find((account) => account.email === email);
     if (existingAccount) {
@@ -33,7 +44,10 @@ function CreateAccount() {
     setAlertMessage('');
     setStatus('Account created successfully');
     setShow(false);
-    toast.success('Successfully Created Account');
+    toast.success('Successfully Created Account', {
+      position: 'top-center',
+      autoClose: 2000,
+    });
   };
 
   const clearForm = () => {
@@ -85,7 +99,11 @@ function CreateAccount() {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                {alertMessage && <Alert variant="danger">{alertMessage}</Alert>}
+                {alertMessage && (
+                  <Alert variant="danger" className="mt-3">
+                    {alertMessage}
+                  </Alert>
+                )}
                 <Button type="submit" variant="primary" className="mt-3">
                   Create Account
                 </Button>

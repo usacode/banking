@@ -14,9 +14,7 @@ function Home() {
           </Card.Body>
         </Card>
       </Col>
-      
     </div>
-    /**<Card.Img src={require('./bank.png').default} />* */
   );
 }
 export default Home;

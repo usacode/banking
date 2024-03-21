@@ -17,12 +17,12 @@
 }
 
 .custom-table th {
-  background-color:  rgb(118, 118, 188); /* Header background color */
-  color: #fff; /* Header text color */
+  background-color:  rgb(118, 118, 188); 
+  color: #fff; 
 }
 
 .custom-table tbody tr:nth-of-type(odd) {
-  background-color: #f8f9fa; /* Alternate row background color */
+  background-color: #f8f9fa;
 }
 
 /* Custom styles for smaller devices */
