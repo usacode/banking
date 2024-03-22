@@ -41,6 +41,9 @@ function Deposit() {
     setError('');
   };
 
+  // Check if all fields are blank
+  const isDisabled = !depositAmount;
+
   return (
     <div className="container mt-5">
       <p>
@@ -63,8 +66,17 @@ function Deposit() {
                   onChange={(e) => setDepositAmount(e.target.value)}
                 />
               </Form.Group>
-              {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
-              <Button variant="primary" type="submit" className="mt-3">
+              {error && (
+                <Alert variant="danger" className="mt-3">
+                  {error}
+                </Alert>
+              )}
+              <Button
+                variant="primary"
+                type="submit"
+                className="mt-3"
+                disabled={isDisabled}
+              >
                 Deposit
               </Button>
             </Form>

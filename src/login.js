@@ -29,6 +29,8 @@ function Login() {
       setError('Invalid email or password');
     }
   };
+  // Check if all fields are blank
+  const isDisabled = !email || !password;
 
   return (
     <div className="container mt-5">
@@ -56,7 +58,13 @@ function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Group>
-              <Button variant="primary" type="submit" block className="mt-3">
+              <Button
+                variant="primary"
+                type="submit"
+                block
+                className="mt-3"
+                disabled={isDisabled}
+              >
                 Login
               </Button>
               {error && (

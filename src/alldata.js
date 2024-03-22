@@ -6,10 +6,10 @@ const AllData = () => {
   const { accounts } = useContext(BankContext);
 
   return (
-    <div className="table-responsive">
+    <div className=" container mt-5">
       <h2>All Data</h2>
 
-      <Table striped bordered hover className="custom-table">
+      <Table striped hover className="custom-table table-responsive">
         <thead>
           <tr>
             <th>Name</th>

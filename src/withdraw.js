@@ -39,6 +39,9 @@ function Withdraw() {
     setError('');
   };
 
+  // Check if all fields are blank
+  const isDisabled = !withdrawAmount;
+
   return (
     <div className="container mt-5">
       <p>
@@ -61,8 +64,17 @@ function Withdraw() {
                   onChange={(e) => setWithdrawAmount(e.target.value)}
                 />
               </Form.Group>
-              {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
-              <Button variant="primary" type="submit" className="mt-3">
+              {error && (
+                <Alert variant="danger" className="mt-3">
+                  {error}
+                </Alert>
+              )}
+              <Button
+                variant="primary"
+                type="submit"
+                className="mt-3"
+                disabled={isDisabled}
+              >
                 Withdraw
               </Button>
             </Form>

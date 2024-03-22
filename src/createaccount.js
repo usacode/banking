@@ -9,7 +9,6 @@ function CreateAccount() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [status, setStatus] = useState('');
   const [show, setShow] = useState(true);
   const [alertMessage, setAlertMessage] = useState('');
 
@@ -21,11 +20,12 @@ function CreateAccount() {
   const handleCreate = (e) => {
     e.preventDefault();
 
-    // Check if any field is empty
-    if (!name || !email || !password) {
-      setStatus('Please fill in all fields');
+    // Check if password is at least 8 characters
+    if (password.length < 8) {
+      setAlertMessage('Password must be at least 8 characters long.');
       return;
     }
+
     //check if eamil format is valid
     if (!isValidEmail(email)) {
       setAlertMessage('Please enter a valid email');
@@ -41,8 +41,8 @@ function CreateAccount() {
 
     // Call addAccount from context
     addAccount({ name, email, password });
+
     setAlertMessage('');
-    setStatus('Account created successfully');
     setShow(false);
     toast.success('Successfully Created Account', {
       position: 'top-center',
@@ -50,13 +50,15 @@ function CreateAccount() {
     });
   };
 
+  //Clean up the form
   const clearForm = () => {
     setName('');
     setEmail('');
     setPassword('');
-    setStatus('');
     setShow(true);
   };
+  // Check if all fields are blank
+  const isDisabled = !name || !email || !password;
 
   return (
     <div className="container mt-5">
@@ -104,7 +106,12 @@ function CreateAccount() {
                     {alertMessage}
                   </Alert>
                 )}
-                <Button type="submit" variant="primary" className="mt-3">
+                <Button
+                  type="submit"
+                  variant="primary"
+                  className="mt-3"
+                  disabled={isDisabled}
+                >
                   Create Account
                 </Button>
               </form>
@@ -117,7 +124,6 @@ function CreateAccount() {
               </div>
             )}
           </Card.Body>
-          {status && <Card.Footer className="text-muted">{status}</Card.Footer>}
         </Card>
       </Col>
     </div>
