@@ -15,6 +15,7 @@ function Withdraw() {
       return;
     }
 
+    //check if amount is a valid number
     if (
       !withdrawAmount.trim() ||
       isNaN(withdrawAmount) ||
@@ -26,6 +27,7 @@ function Withdraw() {
 
     const parsedWithdrawAmount = parseFloat(withdrawAmount);
 
+    //check if the user have enghot funds before performing withdraw
     if (parsedWithdrawAmount > currentUser.balance) {
       setError('Insufficient funds');
       return;

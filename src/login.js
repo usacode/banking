@@ -1,4 +1,3 @@
-// Login.jsx
 import React, { useState, useContext } from 'react';
 import { Card, Form, Button, Alert, Col } from 'react-bootstrap';
 import { BankContext } from './context';
