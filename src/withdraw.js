@@ -54,7 +54,7 @@ function Withdraw() {
         <Card className="bg-custom">
           <Card.Body>
             <Card.Text>
-              Balance: {currentUser ? currentUser.balance : 'N/A'}
+              Balance: ${currentUser ? currentUser.balance : 'N/A'}
             </Card.Text>
             <Form onSubmit={handleWithdraw}>
               <Form.Group controlId="formWithdrawAmount">

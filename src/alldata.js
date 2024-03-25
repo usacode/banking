@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { BankContext } from './context';
-import { Table } from 'react-bootstrap';
+import { Card, Col, CardFooter } from 'react-bootstrap';
 
 const AllData = () => {
   const { accounts } = useContext(BankContext);
@@ -8,27 +8,18 @@ const AllData = () => {
   return (
     <div className=" container mt-5">
       <h2>All Data</h2>
-
-      <Table striped hover className="custom-table table-responsive">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th>Balance</th>
-          </tr>
-        </thead>
-        <tbody>
-          {accounts.map((account, index) => (
-            <tr key={index}>
-              <td>{account.name}</td>
-              <td>{account.email}</td>
-              <td>{account.password}</td>
-              <td>{account.balance}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      {accounts.map((account, index) => (
+        <Col xs={12} sm={8} md={6} lg={4} key={index} className="mt-3">
+          <Card className="bg-custom">
+            <Card.Body>
+              <Card.Text>{account.name}</Card.Text>
+              <Card.Text>{account.email}</Card.Text>
+              <Card.Text>Password: {account.password}</Card.Text>
+            </Card.Body>
+            <CardFooter> Balance: ${account.balance} </CardFooter>
+          </Card>
+        </Col>
+      ))}
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { Card, Form, Button, Alert, Col } from 'react-bootstrap';
 import { BankContext } from './context';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
   const { accounts, setCurrentUser } = useContext(BankContext);
@@ -23,6 +25,10 @@ function Login() {
       setPassword('');
       // Clear any previous error messages
       setError('');
+      toast.success('Successfully Logged in.', {
+        position: 'top-center',
+        autoClose: 2000,
+      });
     } else {
       // If authentication fails, display error message
       setError('Invalid email or password');
