@@ -1,18 +1,32 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { BankContext } from './context';
 import { Card, Form, Button, Alert, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Withdraw() {
   const { currentUser, updateBalance } = useContext(BankContext);
   const [withdrawAmount, setWithdrawAmount] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const toastDisplayedRef = useRef(false);
+  useEffect(() => {
+    if (!currentUser && !toastDisplayedRef.current) {
+      toast.info('User should be logged in to perform the withdraw. Redirecting to login page...', {
+        position: 'top-center',
+        autoClose: 2000,
+        onClose: () => navigate('/login')
+      });
+      toastDisplayedRef.current = true;
+    }
+  }, [currentUser, navigate]);
 
   const handleWithdraw = (e) => {
     e.preventDefault();
 
     if (!currentUser) {
-      setError('No user logged in');
-      return;
+      return; // Don't proceed with withdraw if user is not logged in
     }
 
     //check if amount is a valid number
@@ -54,7 +68,7 @@ function Withdraw() {
         <Card className="bg-custom">
           <Card.Body>
             <Card.Text>
-              Balance: ${currentUser ? currentUser.balance : 'N/A'}
+              Balance: ${currentUser ? currentUser.balance : '0'}
             </Card.Text>
             <Form onSubmit={handleWithdraw}>
               <Form.Group controlId="formWithdrawAmount">

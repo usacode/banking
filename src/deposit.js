@@ -1,25 +1,33 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { BankContext } from './context';
-import { Card, Form, Button, Alert, Col } from 'react-bootstrap';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { Card, Form, Button, Alert} from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { BankContext } from './context'; 
 
 function Deposit() {
-  const { currentUser, updateBalance } = useContext(BankContext);
+  const { currentUser, updateBalance } = useContext(BankContext); // Get currentUser from context
   const [depositAmount, setDepositAmount] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const toastDisplayedRef = useRef(false);
 
   useEffect(() => {
-    // Update balance when currentUser changes
-    if (currentUser) {
-      console.log('Current user:', currentUser);
+    if (!currentUser && !toastDisplayedRef.current) {
+      toast.info('User should be logged in to perform the deposit. Redirecting to login page...', {
+        position: 'top-center',
+        autoClose: 2000,
+        onClose: () => navigate('/login')
+      });
+      toastDisplayedRef.current = true;
     }
-  }, [currentUser]);
+  }, [currentUser, navigate]);
 
   const handleDeposit = (e) => {
     e.preventDefault();
 
     if (!currentUser) {
-      setError('No user logged in');
-      return;
+      return; // Don't proceed with deposit if user is not logged in
     }
 
     if (
@@ -33,16 +41,13 @@ function Deposit() {
 
     const parsedDepositAmount = parseFloat(depositAmount);
 
-    // Update balance for current user
     updateBalance(currentUser.email, parsedDepositAmount);
 
-    // Clear input and error
     setDepositAmount('');
     setError('');
   };
 
-  // Check if all fields are blank
-  const isDisabled = !depositAmount;
+  const isDisabled = !depositAmount || !currentUser;
 
   return (
     <div className="container mt-5">
@@ -50,11 +55,11 @@ function Deposit() {
         Logged in as: {currentUser ? currentUser.email : 'No user logged in'}
       </p>
       <h2>Deposit</h2>
-      <Col xs={12} sm={8} md={6} lg={4}>
+      <div className="col-sm-8 col-md-6 col-lg-4">
         <Card className="bg-custom">
           <Card.Body>
             <Card.Text>
-              Balance: ${currentUser ? currentUser.balance : 'N/A'}
+              Balance: ${currentUser ? currentUser.balance : '0'}
             </Card.Text>
             <Form onSubmit={handleDeposit}>
               <Form.Group controlId="formDepositAmount">
@@ -64,6 +69,7 @@ function Deposit() {
                   placeholder="Enter deposit amount"
                   value={depositAmount}
                   onChange={(e) => setDepositAmount(e.target.value)}
+                  disabled={!currentUser} // Disable input if user is not logged in
                 />
               </Form.Group>
               {error && (
@@ -82,8 +88,9 @@ function Deposit() {
             </Form>
           </Card.Body>
         </Card>
-      </Col>
+      </div>
     </div>
   );
 }
+
 export default Deposit;
